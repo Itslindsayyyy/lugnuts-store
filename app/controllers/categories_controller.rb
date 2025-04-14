@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   def show
     @category = Category.find(params[:id])
     @products = @category.products
-    render 'products/index'  # reuse the existing index view
+    render "products/index"  # reuse the existing index view
   end
 
   def index
@@ -10,5 +10,3 @@ class CategoriesController < ApplicationController
     @products = Product.page(params[:page]).per(20)
   end
 end
-
-

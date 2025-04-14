@@ -1,5 +1,4 @@
 class CartItemsController < ApplicationController
-  
   def create
     if user_signed_in?
       # Create the cart only if it doesn't exist yet
@@ -8,9 +7,9 @@ class CartItemsController < ApplicationController
       cart = Cart.find_by(id: session[:cart_id]) || Cart.create
       session[:cart_id] = cart.id
     end
-  
+
     product = Product.find(params[:product_id])
-  
+
     cart_item = cart.cart_items.find_by(product_id: product.id)
     if cart_item
       cart_item.quantity += 1
@@ -18,7 +17,7 @@ class CartItemsController < ApplicationController
     else
       cart.cart_items.create(product: product, quantity: 1)
     end
-  
+
     redirect_to cart_path, notice: "#{product.name} added to cart!"
   end
 
@@ -31,7 +30,7 @@ class CartItemsController < ApplicationController
     end
   end
 
-  
+
   def destroy
     item = CartItem.find(params[:id])
     item.destroy

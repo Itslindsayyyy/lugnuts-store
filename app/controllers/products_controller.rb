@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
-  end  
+  end
 
   # POST /products or /products.json
   def create
@@ -42,7 +42,7 @@ class ProductsController < ApplicationController
     @products = @tag.products
     render :index
   end
-  
+
   # PATCH/PUT /products/1 or /products/1.json
   def update
     respond_to do |format|
@@ -76,5 +76,4 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit(:name, :price, :description, :image_url, :sku, :wholesale_cost, :stock_quantity, :category_id, tag_ids: [])
     end
-    
 end

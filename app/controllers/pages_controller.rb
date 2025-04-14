@@ -10,8 +10,7 @@ class PagesController < ApplicationController
 
   def history
   end
-  
+
   def team
   end
 end
-

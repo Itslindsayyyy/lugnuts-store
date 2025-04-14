@@ -12,7 +12,7 @@
 end
 
 # Tags (no more Tag.destroy_all)
-["Best Sellers", "New Arrivals", "Discounts", "Great Value", "Our Top Pick"].each do |tag_name|
+[ "Best Sellers", "New Arrivals", "Discounts", "Great Value", "Our Top Pick" ].each do |tag_name|
   Tag.find_or_create_by!(name: tag_name)
 end
 

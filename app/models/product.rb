@@ -7,4 +7,4 @@ class Product < ApplicationRecord
 
     # validations
     validates :name, :price, :category_id, :image_url, presence: true
-  end
+end

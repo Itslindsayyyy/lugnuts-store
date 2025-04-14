@@ -6,41 +6,39 @@ Rails.application.routes.draw do
   get "cart_items/update"
   get "cart_items/destroy"
   get "carts/show"
-  root 'pages#home'
+  root "pages#home"
 
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: "users/registrations"
   }
 
-  get 'about/history', to: 'pages#history'
-  get 'about/team', to: 'pages#team'
-  get 'about/contact', to: 'contact_messages#new', as: :contact
-  get 'tags/:id', to: 'products#tagged', as: :tag
+  get "about/history", to: "pages#history"
+  get "about/team", to: "pages#team"
+  get "about/contact", to: "contact_messages#new", as: :contact
+  get "tags/:id", to: "products#tagged", as: :tag
   get "/wishlist", to: "wishlist_items#index", as: :wishlist
   get "order_success/:id", to: "orders#success", as: :order_success
 
 
-  
   resources :products
-  resources :contact_messages, only: [:new, :create]
-  resources :categories, only: [:index, :show]
-  resources :orders, only: [:index, :new, :create, :show]
-  resources :wishlist_items, only: [:create, :destroy]  # for wishlist items
-  resource :cart, only: [:show]
-  resources :cart_items, only: [:create, :update, :destroy]
-  resources :users, only: [:index, :show, :edit, :update]
+  resources :contact_messages, only: [ :new, :create ]
+  resources :categories, only: [ :index, :show ]
+  resources :orders, only: [ :index, :new, :create, :show ]
+  resources :wishlist_items, only: [ :create, :destroy ]  # for wishlist items
+  resource :cart, only: [ :show ]
+  resources :cart_items, only: [ :create, :update, :destroy ]
+  resources :users, only: [ :index, :show, :edit, :update ]
 
 
   namespace :admin do
     get "dashboard", to: "dashboard#index"
   end
-  
+
   namespace :manager do
     get "dashboard", to: "dashboard#index"
   end
-  
-  post "/stripe/webhook", to: "webhooks#stripe"
 
+  post "/stripe/webhook", to: "webhooks#stripe"
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
       ship_city: current_user.city,
       ship_state: current_user.state,
       ship_zip: current_user.zip,
-      fulfillment_method: 'shipping'
+      fulfillment_method: "shipping"
     )
   end
 
@@ -33,11 +33,11 @@ class OrdersController < ApplicationController
       end
 
       session = Stripe::Checkout::Session.create(
-        payment_method_types: ['card'],
+        payment_method_types: [ "card" ],
         line_items: @cart.cart_items.map do |item|
           {
             price_data: {
-              currency: 'usd',
+              currency: "usd",
               product_data: {
                 name: item.product.name
               },
@@ -46,7 +46,7 @@ class OrdersController < ApplicationController
             quantity: item.quantity
           }
         end,
-        mode: 'payment',
+        mode: "payment",
         metadata: {
           order_id: @order.id
         },
