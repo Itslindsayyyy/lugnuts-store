@@ -20,11 +20,14 @@
   <div class="row g-4">
     <!-- Tile 1: Best Sellers -->
     <div class="col-6 col-md-4">
-      <%= link_to tag_path(Tag.find_by(name: 'Best Sellers')), class: "tile-box tile-feature text-white d-flex flex-column justify-content-between text-center h-100 p-4 text-decoration-none" do %>
-        <div class="mb-2"><i class="bi bi-star-fill fs-2"></i></div>
-        <h5 class="fw-bold text-uppercase mb-3">Best Sellers</h5>
-        <span class="btn btn-outline-light btn-sm rounded-pill px-3">Shop Now</span>
+      <% if (tag = Tag.find_by(name: 'Best Sellers')) %>
+        <%= link_to tag_path(tag), class: "tile-box tile-feature text-white d-flex flex-column justify-content-between text-center h-100 p-4 text-decoration-none" do %>
+          <div class="mb-2"><i class="bi bi-star-fill fs-2"></i></div>
+          <h5 class="fw-bold text-uppercase mb-3">Best Sellers</h5>
+          <span class="btn btn-outline-light btn-sm rounded-pill px-3">Shop Now</span>
+        <% end %>
       <% end %>
+  
     </div>
   
     <!-- Tile 2: New Arrivals -->
