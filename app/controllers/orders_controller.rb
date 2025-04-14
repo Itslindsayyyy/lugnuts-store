@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
 
   def new
     @cart = current_cart
-  
+
     @order = Order.new(
       email: current_user.email,
       phone: current_user.phone,
@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
       status: "Processing",
       total: @cart.cart_items.sum { |item| item.product.price * item.quantity }
     )
-  
+
     if @order.save
       @cart.cart_items.each do |item|
         @order.order_items.create(
@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
           price: item.product.price
         )
       end
-  
+
       session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
         line_items: @cart.cart_items.map do |item|
@@ -53,17 +53,16 @@ class OrdersController < ApplicationController
         success_url: order_success_url(@order),
         cancel_url: cart_url
       )
-  
+
       # Clear the cart
       @cart.cart_items.destroy_all
-  
+
       redirect_to session.url, allow_other_host: true
     else
       render :new, alert: "Something went wrong. Please try again."
     end
-  end  
+  end
 
-  # Order history
   def index
     @orders = current_user.orders.order(created_at: :desc)
   end
