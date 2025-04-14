@@ -1,0 +1,57 @@
+<%= form_with(model: product) do |form| %>
+  <% if product.errors.any? %>
+    <div style="color: red">
+      <h3><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h3>
+
+      <ul>
+        <% product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :brand_name %>
+    <%= f.text_field :brand_name, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :price, style: "display: block" %>
+    <%= form.text_field :price %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.textarea :description %>
+  </div>
+  
+  <div class="mb-3">
+    <%= form.label :category_id, "Category" %>
+    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: "Select a category", class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :tag_ids, "Tags" %><br>
+    <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |cb| %>
+      <div class="form-check form-check-inline">
+        <%= cb.check_box(class: "form-check-input") %>
+        <%= cb.label(class: "form-check-label") %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :image_url, style: "display: block" %>
+    <%= form.text_field :image_url %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

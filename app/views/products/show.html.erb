@@ -1,0 +1,84 @@
+
+<div class="container my-5">
+  <!-- Category Name Link -->
+  <%= link_to @category.name, category_path(@category), class: "text-uppercase text-primary small fw-semibold d-block mb-1" %>
+
+  <!-- Product Title and Brand -->
+  <h1 class="fw-bold mb-1"><%= @product.name %></h1>
+  <p class="text-muted fw-semibold small mb-4"><%= @product.brand_name %></p>
+
+  <!-- Product Content -->
+  <div class="row align-items-start mb-5">
+    <!-- Image -->
+    <div class="col-md-6 mb-4 mb-md-0">
+      <%= image_tag @product.image_url, class: "img-fluid border rounded w-100", style: "aspect-ratio: 1 / 1; object-fit: cover;" %>
+    </div>
+
+    <!-- Description and Buttons -->
+    <div class="col-md-6">
+      <p class="mb-4"><%= @product.description %></p>
+
+      <div class="d-flex flex-wrap gap-2">
+        <a href="#more-info" class="btn btn-outline-gold btn-sm">see more</a>
+        <button class="btn btn-gold btn-sm">add to cart</button>
+
+        <% if user_signed_in? %>
+          <% if current_user.wishlist_products.include?(@product) %>
+            <%= button_to wishlist_item_path(@product), method: :delete, class: "btn btn-outline-gold btn-sm" do %>
+              Remove from wishlist
+            <% end %>
+          <% else %>
+            <%= button_to wishlist_items_path(product_id: @product.id), method: :post, class: "btn btn-outline-gold btn-sm" do %>
+              + add to wishlist
+            <% end %>
+          <% end %>
+        <% else %>
+          <button class="btn btn-outline-gold btn-sm" onclick="alert('Please log in to add to your wishlist')">+ add to wishlist</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Additional Product Info -->
+  <div id="more-info" class="mb-5">
+    <h4 class="fw-bold mb-3">Additional Product Information</h4>
+    <p>More specs, sizing, compatibility, or care instructions here.</p>
+  </div>
+
+  <!-- Other Categories -->
+  <div class="border-top pt-5">
+    <h5 class="fw-bold mb-4">Other Categories</h5>
+
+    <div class="row g-4">
+      <!-- Current Category Tile -->
+      <div class="col-6 col-md-2">
+        <%= link_to category_path(@category), class: "d-block text-center border rounded p-3 category-tile" do %>
+          <strong><%= @category.name %></strong><br><small>(current category)</small>
+        <% end %>
+      </div>
+
+      <!-- Random Categories -->
+      <% @other_categories.each do |cat| %>
+        <div class="col-6 col-md-2">
+          <%= link_to category_path(cat), class: "d-block text-center border rounded p-3 category-tile" do %>
+            <%= cat.name %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <!-- Shop All Categories Tile -->
+      <div class="col-6 col-md-2">
+        <%= link_to categories_path, class: "d-block text-center border rounded p-3 category-tile fw-semibold" do %>
+          Shop All Categories
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  # Admin only block
+<% if current_user&.admin? %>
+  <%= link_to "Edit this product", edit_product_path(@product), class: "btn btn-sm btn-secondary me-2" %>
+  <%= button_to "Delete", @product, method: :delete, class: "btn btn-sm btn-danger" %>
+<% end %>

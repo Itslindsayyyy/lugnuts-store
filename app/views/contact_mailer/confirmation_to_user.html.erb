@@ -1,0 +1,9 @@
+<h2 style="color: #343a40;">Hi <%= @contact_message.name %>,</h2>
+
+<p style="font-size: 16px; color: #495057;">
+  Thanks for reaching out to Lugnuts Automotive! We received your message and one of our team members will get back to you within 24 hours.
+</p>
+
+<h3 style="color: #495057;">Your Message:</h3>
+  <%= simple_format(@contact_message.message) %>
+</p>

@@ -1,0 +1,13 @@
+<h1 class="mb-4">My Wishlist</h1>
+
+<% if @wishlist_products.any? %>
+  <div class="row g-4">
+    <% @wishlist_products.each do |product| %>
+      <div class="col-md-4">
+        <%= render partial: "products/product", locals: { product: product } %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-muted">You haven't saved any products yet.</p>
+<% end %>

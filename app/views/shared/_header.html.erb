@@ -1,0 +1,82 @@
+<!-- Site-Wide Header -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
+  <div class="container">
+    <!-- Logo -->
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag("LUGNUTS_LOGO.png", alt: "Lugnuts Logo", style: "height: 80px; max-width: 160px;") %>
+    <% end %>
+
+    <!-- Hamburger Toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+            aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Nav Area -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbarMain">
+      <!-- Search -->
+      <form class="d-flex me-3 my-2 my-lg-0" role="search" action="/search" method="get">
+        <input class="form-control rounded-pill border-warning border-2" type="search" name="query" placeholder="Search" aria-label="Search">
+      </form>
+
+      <!-- Nav Links -->
+      <ul class="navbar-nav align-items-center mb-2 mb-lg-0">
+        <li class="nav-item"><%= link_to "Shop", products_path, class: "nav-link" %></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            About
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+            <li><%= link_to "Company History", '/about/history', class: "dropdown-item" %></li>
+            <li><%= link_to "Meet the Team", '/about/team', class: "dropdown-item" %></li>
+            <li><%= link_to "Contact Us", new_contact_message_path, class: "dropdown-item" %></li>
+          </ul>
+        </li>
+
+        <% if user_signed_in? %>
+        <!-- Account Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle px-2" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle fs-4"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">         
+            <% if current_user.admin? %>
+              <li><%= link_to "Admin Dashboard", admin_dashboard_path, class: "dropdown-item" %></li>
+            <% elsif current_user.manager? %>
+              <li><%= link_to "Manager Dashboard", manager_dashboard_path, class: "dropdown-item" %></li>
+            <% end %>
+          
+            <li><%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %></li>
+            <li><%= link_to "My Orders", orders_path, class: "dropdown-item" %></li>
+            <li><%= link_to "Wishlist", wishlist_path, class: "dropdown-item" %></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <%= button_to "Logout", destroy_user_session_path, method: :delete, form_class: "d-inline", class: "dropdown-item bg-transparent border-0 p-0 text-start ms-3" %>
+            </li>
+          </ul>
+          
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to new_user_session_path, class: "nav-link px-2" do %>
+              <i class="bi bi-person-circle fs-4"></i>
+            <% end %>
+          </li>
+        <% end %>
+
+        <li class="nav-item">
+          <%= link_to cart_path, class: "nav-link px-2 position-relative" do %>
+            <i class="bi bi-cart fs-4"></i>
+              <% if current_cart&.cart_items&.any? %>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                <%= current_cart.cart_items.sum(:quantity) %>
+                <span class="visually-hidden">items in cart</span>
+              </span>
+            <% end %>
+          <% end %>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>

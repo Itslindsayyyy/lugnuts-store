@@ -1,0 +1,33 @@
+<footer class="bg-dark text-light text-center text-md-start py-4 mt-5">
+  <div class="container">
+    <div class="row">
+      <!-- Logo Column -->
+      <div class="col-12 col-md-4 mb-3 mb-md-0 text-center text-md-start">
+        <%= image_tag("LUGNUTS_LOGO.png", alt: "Lugnuts Logo", style: "height: 50px;") %>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-6 col-md-4 mb-3 mb-md-0">
+        <h6 class="text-uppercase">Quick Links</h6>
+        <ul class="list-unstyled">
+          <li><%= link_to "Shop", products_path, class: "text-light text-decoration-none" %></li>
+          <li><%= link_to "About Us", '/about/history', class: "text-light text-decoration-none" %></li>
+          <li><%= link_to "Contact", new_contact_message_path, class: "text-light text-decoration-none" %></li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="col-6 col-md-4">
+        <h6 class="text-uppercase">Legal</h6>
+        <ul class="list-unstyled">
+          <li><%= link_to "Privacy Policy", "#", class: "text-light text-decoration-none" %></li>
+          <li><%= link_to "Terms of Service", "#", class: "text-light text-decoration-none" %></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="border-light my-3">
+
+    <p class="mb-0 text-center small">&copy; <%= Date.today.year %> Lugnuts Automotive. All rights reserved.</p>
+  </div>
+</footer>

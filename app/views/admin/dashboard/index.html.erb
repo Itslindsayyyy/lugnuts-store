@@ -1,0 +1,38 @@
+<div class="container py-5">
+  <h1 class="mb-4">Admin Dashboard</h1>
+
+  <div class="row g-4">
+    <!-- Inventory Management Block -->
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Inventory Management</h5>
+          <p class="card-text">Add, update, or remove products from the store.</p>
+          <%= link_to "Manage Products", products_path, class: "btn btn-outline-primary" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Submissions Block -->
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Contact Form Submissions</h5>
+          <p class="card-text">View and respond to customer inquiries.</p>
+          <%= link_to "View Messages", contact_messages_path, class: "btn btn-outline-primary" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Management Block -->
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">User Management</h5>
+          <p class="card-text">View, edit, or deactivate user accounts.</p>
+          <%= link_to "Manage Users", users_path, class: "btn btn-outline-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

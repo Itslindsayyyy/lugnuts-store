@@ -1,0 +1,104 @@
+<h2 class="mb-4">Checkout</h2>
+
+
+
+
+<%= form_with model: @order, local: true do |f| %>
+
+  <!-- Contact Info -->
+  <h4 class="mt-4">Contact Information</h4>
+  <div class="row g-3 mb-3">
+    <div class="col-md-6">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: "form-control" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.label :phone, "Phone Number" %>
+      <%= f.telephone_field :phone, class: "form-control" %>
+    </div>
+  </div>
+
+  <!-- Fulfillment Method -->
+  <div class="mb-3">
+    <%= f.label :fulfillment_method, "How would you like to receive your order?" %><br/>
+    <%= f.radio_button :fulfillment_method, "shipping" %> Ship to my address
+    <%= f.radio_button :fulfillment_method, "pickup" %> I’ll pick up in store
+  </div>
+
+  <!-- Conditional Shipping Fields -->
+  <div id="shipping-fields">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <%= f.label :ship_name, "Full Name" %>
+        <%= f.text_field :ship_name, class: "form-control" %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :ship_street, "Street Address" %>
+        <%= f.text_field :ship_street, class: "form-control" %>
+      </div>
+      <div class="col-md-4">
+        <%= f.label :ship_city %>
+        <%= f.text_field :ship_city, class: "form-control" %>
+      </div>
+      <div class="col-md-4">
+        <%= f.label :ship_state %>
+        <%= f.text_field :ship_state, class: "form-control" %>
+      </div>
+      <div class="col-md-4">
+        <%= f.label :ship_zip, "ZIP" %>
+        <%= f.text_field :ship_zip, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Summary -->
+  <h4 class="mt-5">Order Summary</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% current_cart.cart_items.each do |item| %>
+        <tr>
+          <td><%= item.product.name %></td>
+          <td><%= item.quantity %></td>
+          <td><%= number_to_currency(item.product.price * item.quantity) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <p class="text-end fw-bold">
+    Total: <%= number_to_currency(current_cart.cart_items.sum { |item| item.product.price * item.quantity }) %>
+  </p>
+
+  <!-- Stripe Notice -->
+  <div class="alert alert-info mt-4">
+    After clicking "Place Order," you’ll be redirected to Stripe for secure payment.
+  </div>
+
+  <!-- Submit Button -->
+  <div class="mt-4">
+    <%= f.submit "Place Order", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<!-- JavaScript: Toggle Shipping Fields -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const shippingFields = document.getElementById("shipping-fields");
+    const radios = document.querySelectorAll("input[name='order[fulfillment_method]']");
+
+    const toggleFields = () => {
+      const selected = document.querySelector("input[name='order[fulfillment_method]']:checked")?.value;
+      shippingFields.style.display = (selected === "shipping") ? "block" : "none";
+    };
+
+    radios.forEach(radio => radio.addEventListener("change", toggleFields));
+    toggleFields(); // Run on load
+  });
+</script>

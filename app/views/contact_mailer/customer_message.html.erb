@@ -1,0 +1,22 @@
+<h2 style="color: #343a40;">New Contact Form Submission</h2>
+
+<table cellpadding="5" cellspacing="0" width="100%" style="font-size: 16px;">
+  <tr>
+    <td style="font-weight: bold; color: #495057;">Name:</td>
+    <td style="color: #212529;"><%= @contact_message.name %></td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold; color: #495057;">Email:</td>
+    <td style="color: #212529;"><%= @contact_message.email %></td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold; color: #495057;">Subject:</td>
+    <td style="color: #212529;"><%= @contact_message.subject %></td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold; color: #495057; vertical-align: top;">Message:</td>
+    <td style="color: #212529; background-color: #e9ecef; padding: 15px; border-radius: 4px;">
+      <%= simple_format(@contact_message.message) %>
+    </td>
+  </tr>
+</table>
