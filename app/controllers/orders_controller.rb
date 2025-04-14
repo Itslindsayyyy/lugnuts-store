@@ -24,7 +24,6 @@ class OrdersController < ApplicationController
     )
   
     if @order.save
-      # Create order items from cart items
       @cart.cart_items.each do |item|
         @order.order_items.create(
           product: item.product,
@@ -33,41 +32,36 @@ class OrdersController < ApplicationController
         )
       end
   
-      # 🔄 Build Stripe line items
-      line_items = @order.order_items.map do |item|
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: item.product.name
-            },
-            unit_amount: (item.price * 100).to_i  # <== Right here!
-          },
-          quantity: item.quantity
-        }
-      end
-  
-      # 🔐 Create Stripe Checkout session
       session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
-        line_items: line_items,
+        line_items: @cart.cart_items.map do |item|
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: item.product.name
+              },
+              unit_amount: (item.product.price * 100).to_i
+            },
+            quantity: item.quantity
+          }
+        end,
         mode: 'payment',
+        metadata: {
+          order_id: @order.id
+        },
         success_url: order_success_url(@order),
         cancel_url: cart_url
       )
   
-      # ✅ Clear cart only after payment success (optional)
-      # @cart.cart_items.destroy_all — move this to success action
+      # Clear the cart
+      @cart.cart_items.destroy_all
   
       redirect_to session.url, allow_other_host: true
     else
       render :new, alert: "Something went wrong. Please try again."
     end
-
-    metadata: {
-     order_id: @order.id
-    }
-  end
+  end  
 
   # Order history
   def index
