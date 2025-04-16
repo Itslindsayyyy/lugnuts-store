@@ -1,19 +1,18 @@
-<%= form_with(model: product) do |form| %>
+<%= form_with(model: product, local: true, html: { multipart: true }) do |f| %>
   <% if product.errors.any? %>
-    <div style="color: red">
-      <h3><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h3>
-
+    <div class="alert alert-danger">
+      <h4><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h4>
       <ul>
-        <% product.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% product.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="mb-3">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
   </div>
 
   <div class="mb-3">
@@ -21,24 +20,29 @@
     <%= f.text_field :brand_name, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.text_field :price %>
-  </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
-  </div>
-  
   <div class="mb-3">
-    <%= form.label :category_id, "Category" %>
-    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: "Select a category", class: "form-select" %>
+    <%= f.label :price %>
+    <%= f.number_field :price, step: 0.01, class: "form-control" %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :tag_ids, "Tags" %><br>
-    <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |cb| %>
+    <%= f.label :description %>
+    <%= f.text_area :description, rows: 4, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :stock_quantity %>
+    <%= f.number_field :stock_quantity, min: 0, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :category_id, "Category" %>
+    <%= f.collection_select :category_id, Category.all, :id, :name, prompt: "Select a category", class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :tag_ids, "Tags" %><br>
+    <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name do |cb| %>
       <div class="form-check form-check-inline">
         <%= cb.check_box(class: "form-check-input") %>
         <%= cb.label(class: "form-check-label") %>
@@ -46,12 +50,19 @@
     <% end %>
   </div>
 
-  <div>
-    <%= form.label :image_url, style: "display: block" %>
-    <%= form.text_field :image_url %>
+  <div class="mb-3">
+    <%= f.label :image, "Upload Image" %>
+    <%= f.file_field :image, class: "form-control" %>
+
+    <% if product.image.attached? %>
+      <div class="mt-3">
+        <strong>Current Image:</strong><br>
+        <%= image_tag product.image.variant(resize_to_fill: [400, 400]), class: "img-thumbnail" %>
+      </div>
+    <% end %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="mt-4">
+    <%= f.submit "Save Product", class: "btn btn-primary" %>
   </div>
 <% end %>

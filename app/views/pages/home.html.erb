@@ -50,8 +50,10 @@
 
     <!-- Tile 4: Mission -->
     <div class="col-12 col-md-8">
-      <div class="tile-box tile-bg" style="background-image: url('/mission1.jpg');">
-        <div class="tile-mission-overlay bg-white p-4 text-center d-flex flex-column justify-content-end" style="min-height: 260px;">
+      <div class="tile-box tile-mission-container p-0 overflow-hidden position-relative">
+        <img src="/mission1.jpg" alt="Mission Image" class="w-100 h-100 object-fit-cover">
+    
+        <div class="tile-mission-overlay bg-white text-center p-4 position-absolute bottom-0 w-100">
           <p>We're a local, family-run parts supplier focused on great customer service, fast shipping, and reliable automotive products — for DIYers and pros alike.</p>
           <%= link_to "Learn More", "/about/history", class: "btn btn-outline-dark btn-sm rounded-pill px-3" %>
         </div>

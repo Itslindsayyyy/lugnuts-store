@@ -10,7 +10,11 @@
   <% end %>
 
   <div class="position-relative">
-    <%= image_tag product.image_url, class: "img-fluid product-image", alt: product.name %>
+    <% if product.image.attached? %>
+      <%= image_tag product.image.variant(resize_to_fill: [400, 400]), class: "product-image" %>
+    <% else %>
+      <%= image_tag "/default_product.jpg", class: "product-image" %>
+    <% end %>
 
     <div class="wishlist-icon position-absolute bottom-0 end-0 p-2">
       <% if user_signed_in? %>

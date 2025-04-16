@@ -125,22 +125,35 @@
 }
 
 .tile-mission-container {
-  min-height: 260px;
-  height: 100%;
+  height: 400px;
   position: relative;
+  border-radius: 0.5rem;
+}
+
+.tile-mission-container img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .tile-mission-overlay {
-  position: relative;
-  z-index: 2;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  padding: 0;
 }
 
-.tile-bg {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 260px;
-  position: relative;
+.tile-mission-overlay p {
+  margin-bottom: .5rem;
+}
+
+.tile-mission-overlay .btn {
+  margin-top: .25rem;
 }
 
 .tile-highlight {

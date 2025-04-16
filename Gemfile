@@ -71,3 +71,5 @@ group :test do
 end
 
 gem "stripe", "~> 15.0"
+
+gem 'image_processing', '~> 1.2'

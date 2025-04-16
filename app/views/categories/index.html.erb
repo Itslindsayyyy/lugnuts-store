@@ -9,13 +9,40 @@
   <% end %>
 </div>
 
+<!-- Filter Controls -->
+<div class="row mb-4">
+  <div class="col-md-6">
+    <%= form_with url: categories_path, method: :get, local: true do |f| %>
+      <div class="input-group mb-2">
+        <%= f.label :category_id, "Filter by Category", class: "input-group-text" %>
+        <%= f.select :category_id, options_from_collection_for_select(@categories, :id, :name, params[:category_id]), { include_blank: "All" }, class: "form-select" %>
+        <%= f.submit "Apply", class: "btn btn-outline-secondary" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form_with url: categories_path, method: :get, local: true do |f| %>
+      <div class="input-group mb-2">
+        <%= f.label :tag_id, "Filter by Tag", class: "input-group-text" %>
+        <%= f.select :tag_id, options_from_collection_for_select(@tags, :id, :name, params[:tag_id]), { include_blank: "All" }, class: "form-select" %>
+        <%= f.submit "Apply", class: "btn btn-outline-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
 <!-- Products -->
 <h2 class="mb-4">All Products</h2>
 <div class="row g-4">
   <% @products.each do |product| %>
     <div class="col-6 col-md-4 col-lg-3">
       <div class="product-card border rounded p-3 h-100 d-flex flex-column">
-        <%= image_tag(product.image_url, class: "img-fluid mb-2", alt: product.name) if product.image_url.present? %>
+        <% if product.image.attached? %>
+          <%= image_tag product.image.variant(resize_to_fill: [400, 400]), class: "product-image mb-2", alt: product.name %>
+        <% else %>
+          <%= image_tag "/default_product.jpg", class: "product-image mb-2", alt: "No image available" %>
+        <% end %>
         <h6 class="fw-bold"><%= product.name %></h6>
         <p class="text-muted small mb-1">$<%= number_with_precision(product.price, precision: 2) %></p>
         <%= link_to "View", product_path(product), class: "btn btn-outline-primary btn-sm mt-auto" %>
