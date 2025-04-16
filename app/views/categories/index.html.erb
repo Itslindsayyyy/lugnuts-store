@@ -37,19 +37,11 @@
 <div class="row g-4">
   <% @products.each do |product| %>
     <div class="col-6 col-md-4 col-lg-3">
-      <div class="product-card border rounded p-3 h-100 d-flex flex-column">
-        <% if product.image.attached? %>
-          <%= image_tag product.image.variant(resize_to_fill: [400, 400]), class: "product-image mb-2", alt: product.name %>
-        <% else %>
-          <%= image_tag "/default_product.jpg", class: "product-image mb-2", alt: "No image available" %>
-        <% end %>
-        <h6 class="fw-bold"><%= product.name %></h6>
-        <p class="text-muted small mb-1">$<%= number_with_precision(product.price, precision: 2) %></p>
-        <%= link_to "View", product_path(product), class: "btn btn-outline-primary btn-sm mt-auto" %>
-      </div>
+      <%= render partial: "products/product", locals: { product: product } %>
     </div>
   <% end %>
 </div>
+
 
 <!-- Pagination (moved outside the loop) -->
 <div class="mt-4">

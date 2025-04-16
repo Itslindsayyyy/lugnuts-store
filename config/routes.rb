@@ -34,8 +34,11 @@ Rails.application.routes.draw do
     get "dashboard", to: "dashboard#index"
     get "inventory", to: "dashboard#inventory", as: :inventory
 
+    resources :users, only: [:index, :show, :edit, :update, :destroy]
+
     resources :products, only: [] do
       patch :update_stock, on: :member
+
     end
   end
 
