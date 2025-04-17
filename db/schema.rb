@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_14_203221) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_17_030909) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -50,7 +50,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_14_203221) do
   end
 
   create_table "carts", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_carts_on_user_id"
@@ -97,6 +97,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_14_203221) do
     t.boolean "paid"
     t.string "email"
     t.string "phone"
+    t.datetime "confirmation_sent_at"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

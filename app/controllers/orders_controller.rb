@@ -56,6 +56,7 @@ class OrdersController < ApplicationController
 
       # Clear the cart
       @cart.cart_items.destroy_all
+      session[:cart_id] = nil
 
       redirect_to session.url, allow_other_host: true
     else
@@ -63,6 +64,17 @@ class OrdersController < ApplicationController
     end
   end
 
+  def success
+    @order = current_user.orders.find(params[:id])
+  
+    unless @order.confirmation_sent_at?
+      OrderMailer.confirmation(@order).deliver_later
+      @order.update(confirmation_sent_at: Time.current)
+    end
+  
+    redirect_to order_path(@order), notice: "Thanks for your purchase! Your confirmation email has been sent."
+  end
+  
   def index
     @orders = current_user.orders.order(created_at: :desc)
   end

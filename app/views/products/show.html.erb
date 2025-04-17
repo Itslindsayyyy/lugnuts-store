@@ -79,10 +79,3 @@
     </div>
   </div>
 </div>
-
-
-  # Admin only block
-<% if current_user&.admin? %>
-  <%= link_to "Edit this product", edit_product_path(@product), class: "btn btn-sm btn-secondary me-2" %>
-  <%= button_to "Delete", @product, method: :delete, class: "btn btn-sm btn-danger" %>
-<% end %>

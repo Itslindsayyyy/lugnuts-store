@@ -15,9 +15,17 @@
     <!-- Collapsible Nav Area -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarMain">
       <!-- Search -->
-      <form class="d-flex me-3 my-2 my-lg-0" role="search" action="/search" method="get">
-        <input class="form-control rounded-pill border-warning border-2" type="search" name="query" placeholder="Search" aria-label="Search">
-      </form>
+      <form class="d-flex me-3 my-2 my-lg-0" role="search" action="<%= products_path %>" method="get">
+      <input
+        class="form-control rounded-pill border-warning border-2"
+        type="search"
+        name="query"
+        placeholder="Search"
+        aria-label="Search"
+        value="<%= params[:query] %>"
+        onkeydown="if(event.key === 'Enter') this.form.submit();"
+      >
+    </form>    
 
       <!-- Nav Links -->
       <ul class="navbar-nav align-items-center mb-2 mb-lg-0">

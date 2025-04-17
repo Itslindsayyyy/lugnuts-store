@@ -4,8 +4,18 @@ class ProductsController < ApplicationController
   
   # GET /products or /products.json
   def index
-    @products = Product.all
+    if params[:query].present?
+      query = "%#{params[:query]}%"
+      @products = Product
+        .left_joins(:category, :tags)
+        .where("products.name LIKE :q OR products.description LIKE :q OR categories.name LIKE :q OR tags.name LIKE :q", q: query)
+        .distinct
+    else
+      @products = Product.all
+    end
   end
+  
+  
 
   # GET /products/1 or /products/1.json
   def show

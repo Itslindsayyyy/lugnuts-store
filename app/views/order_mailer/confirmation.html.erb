@@ -1,0 +1,16 @@
+<h1>Thank you for your order, <%= @user.first_name %>!</h1>
+
+<p>Your order (#<%= @order.id %>) has been received and is being processed.</p>
+
+<h3>Order Summary:</h3>
+<ul>
+  <% @order_items.each do |item| %>
+    <li>
+      <strong><%= item.product.name %></strong> – Qty: <%= item.quantity %> – $<%= number_with_precision(item.price * item.quantity, precision: 2) %>
+    </li>
+  <% end %>
+</ul>
+
+<p>Total: <strong>$<%= number_with_precision(@order.total, precision: 2) %></strong></p>
+
+<p>We’ll send another email when your order ships.</p>
